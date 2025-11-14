@@ -30,12 +30,12 @@ export default function BookList() {
         <React.Fragment>
             <h1>Best selling Books this week</h1>
             <section className='bookList'>
-                {books.map((book, index) => {
+                {books.map((book, id) => {
                     return (
                         <Book
-                            key={book.index}
+                            key={book.id}
                             {...book}
-                            index={index}
+                            index={book.id}
                             getBook={getBook}
                         ></Book>
                     );
