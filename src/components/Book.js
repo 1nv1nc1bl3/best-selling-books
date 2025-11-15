@@ -1,16 +1,24 @@
-export default function Book(props) {
-    const { id, author, image, title, children, isbn, index, getBook } = props;
-
+export default function Book(book) {
+    const {
+        rank,
+        title,
+        description,
+        author,
+        book_image,
+        publisher,
+        primary_isbn13,
+    } = book;
     return (
         <article className='book'>
-            <img src={image} alt={title} />
-
-            <h2>{title}</h2>
-            <button onClick={() => getBook(id)}>Get Book ID</button>
-            <h4>{author}</h4>
-            <p>{isbn}</p>
-            <p className='bookID'>{`#${index + 1}`}</p>
-            {children}
+            <img src={book_image} alt={title} />
+            <h2 className='book-title'>{title}</h2>
+            <h4>by {author}</h4>
+            <p className='book-description'>{description}</p>
+            <div className='details'>
+                <p>Publisher: {publisher}</p>
+                <p>ISBN: {primary_isbn13}</p>
+            </div>
+            <p className='bookID'>{`#${rank}`}</p>
         </article>
     );
 }

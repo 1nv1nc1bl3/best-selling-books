@@ -1,11 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+@font-face {
+    font-family: 'Lodeh';
+    src: local('Lodeh-VGLD6'), url('./fonts/Lodeh-VGLD6.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Franklin';
+    src: local('FranklinGothic'),
+        url('./fonts/FranklinGothic.woff') format('woff');
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Quicksand', sans-serif;
-    /* font-family: 'Dongle', sans-serif; */
 }
 
 body {
@@ -18,18 +25,33 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
-
-.bookList {
+.container {
+    max-width: 1170px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.main-title {
+    font-family: 'Lodeh', serif;
+}
+.books-list,
+.categories-list {
     width: 90vw;
     max-width: 1170px;
     margin: 5rem auto;
     /* display: grid; */
-    gap: 2rem;
+    gap: 1rem;
+}
+.categories-list {
+    margin: 5rem auto 0;
 }
 .book {
     background: #fff;
     border-radius: 1rem;
-    padding: 4rem 2rem 2rem;
+    padding: 4rem 1rem 2rem;
     text-align: center;
     position: relative;
 }
@@ -40,17 +62,38 @@ body {
 }
 .book h2 {
     margin-top: 1rem;
+    font-family: 'Franklin', sans-serif;
     font-size: 1.3rem;
+    line-height: 1.3rem;
 }
 
 .book h4 {
     color: #617d98;
+    font-family: 'Franklin', sans-serif;
     font-size: 1rem;
     margin-top: 0.5rem;
     letter-spacing: 1.2px;
 }
+.book p,
+select,
+option,
+.not-selected {
+    font-family: 'EB Garamond', serif;
+}
+select,
+.not-selected {
+    font-size: 1.4rem;
+}
 .book p {
     margin: 1rem 0 0.5rem;
+}
+.book .book-title {
+    min-height: 55px;
+}
+.book .book-description {
+    min-height: 100px;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
 }
 h1 {
     text-align: center;
@@ -89,14 +132,14 @@ article p.bookID {
     border-width: 0;
 }
 @media screen and (min-width: 768px) {
-    .bookList {
+    .books-list {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         align-items: start;
     }
 }
 @media screen and (min-width: 767px) and (max-width: 1239px) {
-    .bookList {
+    .books-list {
         grid-template-columns: repeat(2, 1fr);
     }
     .book img {
@@ -107,7 +150,7 @@ article p.bookID {
     }
 }
 @media screen and (max-width: 767px) {
-    .bookList {
+    .books-list {
         display: flex;
         flex-direction: column;
     }

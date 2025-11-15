@@ -1,46 +1,87 @@
-import React from 'react';
-import Book from './Book.js';
-import { books } from '../books.js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../index.css';
+import '../fonts/Lodeh-VGLD6.ttf';
+import '../fonts/FranklinGothic.woff';
+import Book from './Book.js';
+import Dropdown from './Dropdown.js';
+import Spinner from './Spinner.js';
 
 const API = 'vNARGDYNWidjIRP8Vb1QrrpQa2w885xG';
 
-export default function BookList() {
-    useState(() => {
-        const fetchBooks = async () => {
-            try {
-                const res = await fetch(
-                    `https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${API}`
-                );
-                const data = await res.json();
-                console.log(data);
-            } catch (error) {
-                console.log('Error fetching books', error);
+export default function Booklist() {
+    const [books, setBooks] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [IsError, setIsError] = useState(false);
+    const [lists, setLists] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+    const handlePickCategory = (id) => {
+        const pickedCat = lists.find((list) => list.list_id === id);
+        setSelectedCategory(pickedCat);
+        // console.log(pickedCat);
+    };
+
+    const fetchBooks = async () => {
+        try {
+            const res = await fetch(
+                `https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${API}`
+            );
+            if (!res.ok) {
+                setIsError(true);
             }
-        };
+            const data = await res.json();
+            setLists(data.results.lists);
+            setBooks(data.results.lists[4].books);
+            // console.log(data.results);
+        } catch (err) {
+            console.log('Error fetching books', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
         fetchBooks();
     }, []);
 
-    const getBook = (id) => {
-        const book = books.find((book) => book.id === id);
-        console.log(book);
-    };
+    useEffect(() => {
+        if (selectedCategory) setBooks(selectedCategory.books);
+    }, [selectedCategory]);
+
     return (
-        <React.Fragment>
-            <h1>Best selling Books this week</h1>
-            <section className='bookList'>
-                {books.map((book, id) => {
-                    return (
-                        <Book
-                            key={book.id}
-                            {...book}
-                            index={book.id}
-                            getBook={getBook}
-                        ></Book>
-                    );
-                })}
-            </section>
-        </React.Fragment>
+        <main>
+            <h1 className='main-title'>The New York Times Best Sellers</h1>
+            <div className='container'>
+                {loading ? (
+                    <Spinner loading={loading} />
+                ) : (
+                    <>
+                        <Dropdown
+                            handlePickCategory={handlePickCategory}
+                            lists={lists}
+                        />
+
+                        <section className='books-list'>
+                            {!selectedCategory ? (
+                                <p className='not-selected'>
+                                    No category selected yet
+                                </p>
+                            ) : (
+                                books.map((book) => {
+                                    return (
+                                        <Book
+                                            key={
+                                                book.primary_isbn13 ||
+                                                book.primary_isbn11
+                                            }
+                                            {...book}
+                                        ></Book>
+                                    );
+                                })
+                            )}
+                        </section>
+                    </>
+                )}
+            </div>
+        </main>
     );
 }
