@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import '../index.css';
-import '../fonts/Lodeh-VGLD6.ttf';
-import '../fonts/FranklinGothic.woff';
 import Book from './Book.js';
 import Dropdown from './Dropdown.js';
 import Spinner from './Spinner.js';
+import Header from './Header.js';
+import '../index.css';
+// import '../fonts/Lodeh-VGLD6.ttf';
+// import '../fonts/FranklinGothic.woff';
 
 const API = 'vNARGDYNWidjIRP8Vb1QrrpQa2w885xG';
 
@@ -14,6 +15,7 @@ export default function Booklist() {
     const [isError, setIsError] = useState(false);
     const [lists, setLists] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [theme, setTheme] = useState('light');
 
     const handlePickCategory = (id) => {
         const pickedCat = lists.find((list) => list.list_id === id);
@@ -47,50 +49,77 @@ export default function Booklist() {
         if (selectedCategory) setBooks(selectedCategory.books);
     }, [selectedCategory]);
 
-    return (
-        <main>
-            <div className='page-heading'>
-                <h1 className='main-title'>The New York Times Best Sellers</h1>
-                <h4 className='sub-title'>
-                    Authoritatively ranked lists of books sold in the United
-                    States, sorted by format and genre.
-                </h4>
-            </div>
-            <div className='container'>
-                {!isError}
-                {loading ? (
+    // change <body> class
+    useEffect(() => {
+        document.body.className = theme;
+    }, [theme]);
+
+    // When loading, show Spinner
+    if (loading) {
+        return (
+            <main className={`app ${theme}`}>
+                <Header theme={theme} setTheme={setTheme} />
+
+                <div className='container'>
                     <Spinner loading={loading} />
-                ) : (
-                    <>
-                        <Dropdown
-                            handlePickCategory={handlePickCategory}
-                            lists={lists}
-                            selectedCategory={selectedCategory}
-                        />
-                        <h2 className='category-title'>
-                            {selectedCategory?.display_name}
-                        </h2>
-                        <section className='books-list'>
-                            {!selectedCategory ? (
-                                <p className='not-selected'>
-                                    No category selected yet
-                                </p>
-                            ) : (
-                                books.map((book) => {
-                                    return (
-                                        <Book
-                                            key={
-                                                book.primary_isbn13 ||
-                                                book.primary_isbn11
-                                            }
-                                            {...book}
-                                        ></Book>
-                                    );
-                                })
-                            )}
-                        </section>
-                    </>
-                )}
+                </div>
+            </main>
+        );
+    }
+
+    // If Error after finished loading
+    if (isError) {
+        return (
+            <main className={`app ${theme}`}>
+                <Header theme={theme} setTheme={setTheme} />
+                <div className='container'>
+                    <p>Sorry, there was an error!</p>
+                </div>
+            </main>
+        );
+    }
+
+    // No loading & No Errors
+    return (
+        <main className='app'>
+            <Header theme={theme} setTheme={setTheme} />
+            <div className='container'>
+                <div className='app-heading'>
+                    <h1 className='main-title'>
+                        The New York Times Best Sellers
+                    </h1>
+                    <h4 className='sub-title'>
+                        Authoritatively ranked lists of books sold in the United
+                        States, sorted by format and genre.
+                    </h4>
+                </div>
+                <Dropdown
+                    handlePickCategory={handlePickCategory}
+                    lists={lists}
+                    selectedCategory={selectedCategory}
+                />
+
+                <h2 className='category-title'>
+                    {selectedCategory?.display_name}
+                </h2>
+
+                <section className='books-list'>
+                    {!selectedCategory ? (
+                        <p className='not-selected'>No category selected yet</p>
+                    ) : (
+                        books.map((book) => {
+                            return (
+                                <Book
+                                    key={
+                                        book.primary_isbn13 ||
+                                        book.primary_isbn11
+                                    }
+                                    {...book}
+                                />
+                            );
+                        })
+                    )}
+                </section>
             </div>
         </main>
     );

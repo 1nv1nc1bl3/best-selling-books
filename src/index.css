@@ -11,6 +11,24 @@
 }
 /* fonts end */
 
+/* themes start */
+body.light {
+    --bg: #f1f5f8;
+    --text: #222222;
+    --text-2: #617d98;
+    --card-bg: #ffffff;
+    --card-text: #222222;
+}
+
+body.dark {
+    --bg: #111111;
+    --text: #eeeeee;
+    --text-2: #ffa600;
+    --card-bg: #1a1a1a;
+    --card-text: #f5f5f5;
+}
+/* themes end */
+
 /* general style start */
 * {
     margin: 0;
@@ -21,16 +39,14 @@
     outline: none;
 }
 body {
-    background: #f1f5f8;
-    color: #222;
-}
-main {
-    margin-top: 4rem;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.4s ease, color 0.4s ease;
 }
 .container {
     max-width: 1360px;
     width: 100%;
-    margin: 0 auto;
+    margin: 5rem auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,7 +56,37 @@ main {
 }
 /* general style end */
 
-/* heading start */
+/* header start */
+.app-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    /* max-width: 1360px; */
+    width: 100%;
+    margin: 0;
+    padding: 1vh 5vw;
+    background: var(--bg);
+    /* box-shadow: 0 1px 10px #bfd6e7; */
+    border-bottom: 1px solid #bfd6e7;
+    border-radius: 0;
+    z-index: 10;
+}
+.app-logo {
+    font-family: 'Lodeh', serif;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+header button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
 .page-heading {
     text-align: center;
     row-gap: 0.7rem;
@@ -48,8 +94,10 @@ main {
     flex-direction: column;
 }
 .main-title {
-    font-family: 'Lodeh', serif;
-    text-transform: uppercase;
+    font-family: 'EB Garamond', serif;
+    font-size: 2.8rem;
+    line-height: 3rem;
+    text-transform: capitalize;
 }
 .sub-title {
     font-family: 'Franklin', sans-serif;
@@ -66,7 +114,7 @@ main {
     font-weight: 100;
     text-transform: uppercase;
 }
-/* heading end */
+/* header end */
 
 /* dropdown section start */
 select,
@@ -74,7 +122,7 @@ select,
     font-size: 1.4rem;
 }
 .categories-list {
-    margin: 5rem auto 0;
+    margin: 0 auto;
 }
 .not-selected {
     grid-column: span 3;
@@ -89,13 +137,21 @@ select,
 /* dropdown section end */
 
 /* books section start */
+.app-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    row-gap: 0.7rem;
+}
 .books-list {
     max-width: 1360px;
     width: 100%;
     gap: 1rem;
 }
 .book {
-    background: #fff;
+    background: var(--card-bg);
     border-radius: 1rem;
     padding: 4rem 1rem 2rem;
     text-align: center;
@@ -109,15 +165,18 @@ select,
     padding: 0.9rem;
 }
 .book h2 {
+    color: var(--card-text);
     margin-top: 1rem;
     font-family: 'Franklin', sans-serif;
     font-size: 1.3rem;
     line-height: 1.3rem;
 }
 .book h4 {
-    color: #617d98;
+    color: var(--text-2);
     font-family: 'Franklin', sans-serif;
     font-size: 1rem;
+    line-height: 1.2rem;
+    font-weight: 200;
     margin-top: 0.5rem;
     letter-spacing: 1.2px;
 }
