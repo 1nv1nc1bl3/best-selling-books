@@ -11,7 +11,7 @@ const API = 'vNARGDYNWidjIRP8Vb1QrrpQa2w885xG';
 export default function Booklist() {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [IsError, setIsError] = useState(false);
+    const [isError, setIsError] = useState(false);
     const [lists, setLists] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -49,8 +49,15 @@ export default function Booklist() {
 
     return (
         <main>
-            <h1 className='main-title'>The New York Times Best Sellers</h1>
+            <div className='page-heading'>
+                <h1 className='main-title'>The New York Times Best Sellers</h1>
+                <h4 className='sub-title'>
+                    Authoritatively ranked lists of books sold in the United
+                    States, sorted by format and genre.
+                </h4>
+            </div>
             <div className='container'>
+                {!isError}
                 {loading ? (
                     <Spinner loading={loading} />
                 ) : (
@@ -58,8 +65,11 @@ export default function Booklist() {
                         <Dropdown
                             handlePickCategory={handlePickCategory}
                             lists={lists}
+                            selectedCategory={selectedCategory}
                         />
-
+                        <h2 className='category-title'>
+                            {selectedCategory?.display_name}
+                        </h2>
                         <section className='books-list'>
                             {!selectedCategory ? (
                                 <p className='not-selected'>

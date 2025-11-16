@@ -8,6 +8,7 @@ export default function Dropdown({
     return (
         <section className='categories-list'>
             <select
+                name='select-block'
                 value={!selectedCategory ? '' : selectedCategory.list_id}
                 className='list-container'
                 onChange={(e) => {
