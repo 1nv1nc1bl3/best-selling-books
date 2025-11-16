@@ -1,4 +1,4 @@
-import List from './List.jsx';
+import List from './List';
 
 export default function Dropdown({
     selectedCategory,

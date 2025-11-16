@@ -1,4 +1,4 @@
-import Theme from './Theme.js';
+import Theme from './Theme';
 const Header = ({ theme, setTheme }) => {
     return (
         <header className='app-header'>

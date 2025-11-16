@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Book from './Book.js';
-import Dropdown from './Dropdown.js';
-import Spinner from './Spinner.js';
-import Header from './Header.js';
+import Dropdown from './Dropdown';
+import Spinner from './Spinner';
+import Header from './Header';
 import '../index.css';
 // import '../fonts/Lodeh-VGLD6.ttf';
 // import '../fonts/FranklinGothic.woff';
@@ -15,7 +15,9 @@ export default function Booklist() {
     const [isError, setIsError] = useState(false);
     const [lists, setLists] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState(
+        localStorage.getItem('theme') || 'light'
+    );
 
     const handlePickCategory = (id) => {
         const pickedCat = lists.find((list) => list.list_id === id);
@@ -33,7 +35,8 @@ export default function Booklist() {
             }
             const data = await res.json();
             setLists(data.results.lists);
-            setBooks(data.results.lists[4].books);
+
+            // setBooks(data.results.lists[4].books);
             // console.log(data.results);
         } catch (err) {
             console.log('Error fetching books', err);
@@ -45,16 +48,25 @@ export default function Booklist() {
         fetchBooks();
     }, []);
 
+    // assigns selected category to books
     useEffect(() => {
         if (selectedCategory) setBooks(selectedCategory.books);
     }, [selectedCategory]);
 
-    // change <body> class
+    // change <body> class & store theme in localStorage
     useEffect(() => {
         document.body.className = theme;
+        localStorage.setItem('theme', theme);
     }, [theme]);
 
-    // When loading, show Spinner
+    // load theme from localStorage
+    useEffect(() => {
+        if (localStorage.getItem('theme'))
+            setTheme(localStorage.getItem('theme'));
+    }, []);
+
+    /* CONDITIONAL RENDERING */
+    // When loading -> render Spinner
     if (loading) {
         return (
             <main className={`app ${theme}`}>
@@ -67,7 +79,7 @@ export default function Booklist() {
         );
     }
 
-    // If Error after finished loading
+    // If Error after finished loading -> render message
     if (isError) {
         return (
             <main className={`app ${theme}`}>
@@ -79,7 +91,7 @@ export default function Booklist() {
         );
     }
 
-    // No loading & No Errors
+    // No loading & No Errors -> render books
     return (
         <main className='app'>
             <Header theme={theme} setTheme={setTheme} />
