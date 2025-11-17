@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Book(book) {
     const {
         rank,
@@ -11,7 +13,11 @@ export default function Book(book) {
     return (
         <article className='book'>
             <img src={book_image} alt={title} />
-            <h2 className='book-title'>{title}</h2>
+            <h2 className='book-title'>
+                <Link to={`/book/${primary_isbn13}`} state={{ book }}>
+                    {title}
+                </Link>
+            </h2>
             <h4>by {author}</h4>
             <p className='book-description'>{description}</p>
             <div className='details'>

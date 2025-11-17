@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import Book from './Book.js';
-import Dropdown from './Dropdown';
-import Spinner from './Spinner';
-import Header from './Header';
+import Book from '../components/Book.js';
+import DropDown from '../components/DropDown.js';
+import Spinner from '../components/Spinner.js';
 import '../index.css';
 // import '../fonts/Lodeh-VGLD6.ttf';
 // import '../fonts/FranklinGothic.woff';
 
 const API = 'vNARGDYNWidjIRP8Vb1QrrpQa2w885xG';
 
-export default function Booklist() {
+export default function BookList() {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isError, setIsError] = useState(false);
@@ -70,7 +69,7 @@ export default function Booklist() {
     if (loading) {
         return (
             <main className={`app ${theme}`}>
-                <Header theme={theme} setTheme={setTheme} />
+                {/* <Header theme={theme} setTheme={setTheme} /> */}
 
                 <div className='container'>
                     <Spinner loading={loading} />
@@ -83,7 +82,7 @@ export default function Booklist() {
     if (isError) {
         return (
             <main className={`app ${theme}`}>
-                <Header theme={theme} setTheme={setTheme} />
+                {/* <Header theme={theme} setTheme={setTheme} /> */}
                 <div className='container'>
                     <p>Sorry, there was an error!</p>
                 </div>
@@ -94,7 +93,7 @@ export default function Booklist() {
     // No loading & No Errors -> render books
     return (
         <main className='app'>
-            <Header theme={theme} setTheme={setTheme} />
+            {/* <Header theme={theme} setTheme={setTheme} /> */}
             <div className='container'>
                 <div className='app-heading'>
                     <h1 className='main-title'>
@@ -105,7 +104,7 @@ export default function Booklist() {
                         States, sorted by format and genre.
                     </h4>
                 </div>
-                <Dropdown
+                <DropDown
                     handlePickCategory={handlePickCategory}
                     lists={lists}
                     selectedCategory={selectedCategory}

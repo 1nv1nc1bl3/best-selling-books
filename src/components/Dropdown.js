@@ -1,6 +1,6 @@
 import List from './List';
 
-export default function Dropdown({
+export default function DropDown({
     selectedCategory,
     handlePickCategory,
     lists,
