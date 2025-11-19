@@ -41,6 +41,13 @@ body.dark {
     padding: 0;
     box-sizing: border-box;
 }
+.book-head a,
+.book-head a:active,
+.book-head a:focus,
+.book-head a:target,
+.book-head a:visited {
+    color: var(--text-2);
+}
 .list-container:focus-visible {
     outline: none;
 }
@@ -290,7 +297,8 @@ article p.bookID {
     /* border-bottom: 1px solid #bfd6e7; */
     padding: 0.7rem 5vw;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    /* justify-content: flex-end; */
 }
 .arrow-back {
     font-size: 2rem;

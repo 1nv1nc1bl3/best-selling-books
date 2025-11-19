@@ -6,21 +6,22 @@ import BookDetails from './pages/BookDetails';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
-    // theme state
+    // (1) we keep theme on App level so as to pass in all components
     const [theme, setTheme] = useState(
         localStorage.getItem('theme') || 'light'
     );
 
-    // apply theme to body
+    // (2) on theme change → write on body + localStorage
     useEffect(() => {
         document.body.className = theme;
         localStorage.setItem('theme', theme);
     }, [theme]);
 
+    // (3) router appears here
     const router = createBrowserRouter([
         {
-            path: '/',
-            element: <AppLayout theme={theme} setTheme={setTheme} />,
+            path: '/', // main route
+            element: <AppLayout theme={theme} setTheme={setTheme} />, // wrapper layout
             children: [
                 {
                     index: true,
@@ -38,6 +39,7 @@ function App() {
         },
     ]);
 
+    // (4) RouterProvider tells React to use our router
     return <RouterProvider router={router} />;
 }
 

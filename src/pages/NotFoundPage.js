@@ -6,6 +6,7 @@ const NotFoundPage = () => {
         <main className='book-details'>
             <div className='book-body'>
                 <div className='book-head'>
+                    {/* Back to home */}
                     <p>
                         <Link to='/'>
                             <IoIosArrowRoundBack className='arrow-back' />
@@ -13,6 +14,8 @@ const NotFoundPage = () => {
                         </Link>
                     </p>
                 </div>
+
+                {/* Actual message */}
                 <div className='container not-found'>
                     <p>Page not found</p>
                 </div>
